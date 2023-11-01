@@ -14,10 +14,9 @@ document.body.addEventListener("keydown", e => {
 class ComparePokemonTypes {
 
   constructor() {
-    this.poke1TypesUrls = [];
-    this.poke2TypesUrls = [];
+    this.poke1Types = [];
+    this.poke2Types = [];
   }
-
 
   fetchPoke1Data() {
 
@@ -28,17 +27,16 @@ class ComparePokemonTypes {
       .then(async data => {
         console.log("Poke 1 data: ", data)
 
-        const poke1TypeArray = data.types;
-        this.createLIElements(poke1TypeArray, "pokeUL1");
+        this.poke1Types = data.types;
+      
+        this.createLIElements(this.poke1Types, "pokeUL1");
 
         const poke1Image = data.sprites.other["official-artwork"].front_default;
         this.showPokeImage(poke1Image, "pokeImg1");
 
-        this.poke1TypesUrls = poke1TypeArray.map(type => type.type.url);
-
         await this.fetchPoke2Data();
 
-        this.showDmgRelations(this.poke1TypesUrls, this.poke2TypesUrls, "desc1"); // => I need type1, type2, x2 and x1/2 dmg
+        this.showDmgRelations(this.poke1Types, this.poke2Types, "desc1"); // => I need type1, type2, x2 and x1/2 dmg
 
       })
       .catch(error => {
@@ -55,15 +53,13 @@ class ComparePokemonTypes {
       .then(async data => {
         console.log("Poke 2 data: ",data)
 
-        const poke2TypeArray = data.types;
-        this.createLIElements(poke2TypeArray, "pokeUL2");
+        this.poke2Types = data.types;
+        this.createLIElements(this.poke2Types, "pokeUL2");
 
         const poke2Image = data.sprites.other["official-artwork"].front_default;
         this.showPokeImage(poke2Image, "pokeImg2");
 
-        this.poke2TypesUrls = await poke2TypeArray.map(type => type.type.url);
-
-        this.showDmgRelations(this.poke2TypesUrls, this.poke1TypesUrls, "desc2");
+        this.showDmgRelations(this.poke2Types, this.poke1Types, "desc2");
 
       })
       .catch(error => {
@@ -73,9 +69,9 @@ class ComparePokemonTypes {
 
   createLIElements(array, id) {
     const parentULElement = document.querySelector(`#${id}`)
-    array.forEach(type => {
+    array.forEach(typeObj => {
       const newULElement = document.createElement("li");
-      newULElement.textContent = type.type.name;
+      newULElement.textContent = typeObj.type.name;
       parentULElement.appendChild(newULElement);
     });
   };
@@ -88,47 +84,44 @@ class ComparePokemonTypes {
   showDmgRelations(attackingTypes, defendingTypes, descriptionId) {
 
     console.log("call id : ", descriptionId)
-    console.log("defending types data: ",defendingTypes)
+    console.log("defending types data: ", defendingTypes)
 
-    
-    attackingTypes.forEach(url => {
-      fetch(url)
+    attackingTypes.forEach(typeObj => {
+      console.log("TYPE OBJ: ",typeObj)
+      fetch(typeObj.type.url)
       .then(res => res.json())
       .then(data => { 
 
         console.log("Data for attacking type: ", data);
         
-        defendingTypes.forEach(type => {
+        defendingTypes.forEach(typeObj => {
 
-          console.log("defending type: ", type)
+          console.log("defending type: ", typeObj.type.name)
 
           let isNotNormalDmg = 0;
 
           data.damage_relations.double_damage_to.forEach(dd => {
            
-            if(dd.url.includes(type)) {
-              fetch(type)
-              .then(res => res.json())
-              .then(newData => {
-                const typeName = newData.name;
+            if(dd.name.includes(typeObj.type.name)) {
+            
+                const typeName = typeObj.type.name;
                 console.log(data.name, "does DOUBLE damage to ", typeName )
-              })
-              .catch(err => console.log(err))
-              
+
               ++isNotNormalDmg;
             } 
           })
 
           data.damage_relations.half_damage_to.forEach(hd => {
            
-            if(hd.url.includes(type)) {
-              console.log(data.name, " does HALF damage to ", type )
+            if(hd.name.includes(typeObj.type.name)) {
+              const typeName = typeObj.type.name;
+              console.log(data.name, " does HALF damage to ", typeName)
               ++isNotNormalDmg;
             }
           })
 
           if(!isNotNormalDmg) {
-            console.log(data.name, "does NORMAL damage to ", type )
+            console.log(data.name, "does NORMAL damage to ", typeObj.type.name )
           }
         })
       })
