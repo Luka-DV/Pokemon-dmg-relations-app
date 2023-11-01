@@ -71,15 +71,21 @@ class ComparePokemonTypes {
     const parentULElement = document.querySelector(`#${id}`)
     array.forEach(typeObj => {
       const newULElement = document.createElement("li");
-      newULElement.textContent = typeObj.type.name;
+      newULElement.textContent = typeObj.type.name.charAt(0).toUpperCase() + typeObj.type.name.slice(1);
       parentULElement.appendChild(newULElement);
     });
   };
 
+  createPElements(msg, id) {
+    const parentElement = document.querySelector(`#${id}`)
+    const newElement = document.createElement("p");
+    newElement.innerHTML = msg;
+    parentElement.appendChild(newElement);
+  }
+
   showPokeImage(imageUrl, imgId) {
     document.querySelector(`#${imgId}`).src = imageUrl;
   };
-
 
   showDmgRelations(attackingTypes, defendingTypes, descriptionId) {
 
@@ -98,29 +104,34 @@ class ComparePokemonTypes {
 
           console.log("defending type: ", typeObj.type.name)
 
-          let isNotNormalDmg = 0;
+          let isNormalDmg = true;
 
           data.damage_relations.double_damage_to.forEach(dd => {
-           
             if(dd.name.includes(typeObj.type.name)) {
             
-                const typeName = typeObj.type.name;
-                console.log(data.name, "does DOUBLE damage to ", typeName )
+                const doubleDamageMsg = `${data.name.toUpperCase()} attacks do <span class="doubleDMG">DOUBLE</span> damage to ${typeObj.type.name.toUpperCase()} type pokemon.`;
+                this.createPElements(doubleDamageMsg, descriptionId);
 
-              ++isNotNormalDmg;
+                console.log(data.name, "does DOUBLE damage to ", typeObj.type.name )
+
+              isNormalDmg = false;
             } 
           })
 
           data.damage_relations.half_damage_to.forEach(hd => {
-           
             if(hd.name.includes(typeObj.type.name)) {
-              const typeName = typeObj.type.name;
-              console.log(data.name, " does HALF damage to ", typeName)
-              ++isNotNormalDmg;
+              const halfDamageMsg = `${data.name.toUpperCase()} attacks do <span class="halfDMG">HALF</span> damage to ${typeObj.type.name.toUpperCase()} type pokemon.`;
+              this.createPElements(halfDamageMsg, descriptionId);
+              console.log(data.name, " does HALF damage to ", typeObj.type.name) 
+              
+              isNormalDmg = false;
             }
           })
+            
+          if(isNormalDmg) {
+            const normalDamageMsg = `${data.name.toUpperCase()} attacks do <span class="normalDMG">NORMAL</span> damage to ${typeObj.type.name.toUpperCase()} type pokemon.`;
+            this.createPElements(normalDamageMsg, descriptionId);
 
-          if(!isNotNormalDmg) {
             console.log(data.name, "does NORMAL damage to ", typeObj.type.name )
           }
         })
@@ -130,10 +141,7 @@ class ComparePokemonTypes {
       })
     })
   
-  }
-
-
-  
+  } 
   
 }
 
