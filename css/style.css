@@ -1,0 +1,63 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+* {
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+
+main {
+  max-width: 1100px;
+}
+
+img{
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.flexContainer {
+  display: flex;
+  margin-top: 3%;
+}
+
+.pokeSection {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid black;
+}
+
+
+.pokeSection > section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.doubleDMG {
+  color: green;
+  font-weight: 700;
+}
+
+.halfDMG {
+  color: red;
+  font-weight: 700;
+}
+
+.normalDMG {
+  color: grey;
+  font-weight: 700;
+}
+
+
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
