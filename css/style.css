@@ -11,11 +11,56 @@
 /* LAYOUT
 /*******************************************/
 
-main {
-  max-width: 1100px;
+
+body::before {
+  content: "";
+  background: url(../img/PokeBackground\ \(1\).jpg);
+  background-size: cover;
+  position: fixed;
+  inset: 0 0 0 0;
+  opacity: 0.50;
+  z-index: -9;
 }
 
-img{
+body {
+  font-family: 'Inconsolata', monospace;
+  font-weight: 700;
+}
+
+header {
+  text-align: center;
+  margin-top: 15%;
+}
+
+h1 {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+input, button {
+  font-weight: 900;
+  font-size: clamp(1rem, 1.1vw, 1.2rem);
+  padding: 0.3rem 1.4rem;
+  border: 3px solid black;
+  border-radius: 0.7em;
+  box-shadow: 0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.8);
+}
+
+input:focus {
+  outline: none;
+  background: lightgoldenrodyellow
+}
+
+button {
+  background: lightgoldenrodyellow;
+}
+
+button:hover {
+  background: rgba(163, 226, 182, 0.9);
+}
+
+img {
   width: 100%;
   max-width: 250px;
   margin: 0 auto;
@@ -24,36 +69,72 @@ img{
 .flexContainer {
   display: flex;
   margin-top: 3%;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1100px;
+  display: flex;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
 }
 
 .pokeSection {
   width: 50%;
   display: flex;
   flex-wrap: wrap;
-  border: 2px solid black;
+  border: 3px solid black;
+  margin: 0.5%;
+  padding: 0.5% 0.5%;
+  border-radius: 2rem;
+  box-shadow: 0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.74);
 }
 
-
-.pokeSection > section {
+.ulSection {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
+#desc1, #desc2 {
+  margin: 0 auto;
+  border-collapse: collapse;
+  padding: 0 5% 5% 5%;
+}
+
+
+#desc1 p, #desc2 p {
+  padding: 2%;
+  border-top: 2px dotted rgba(0, 0, 0, 0.685);
+  margin: 0;
+}
+
+#desc1 p:last-of-type, #desc2 p:last-of-type {
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.685);
+}
+
+.typesUL {
+  font-weight: 900;
+}
+
 .doubleDMG {
   color: green;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .halfDMG {
   color: red;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .normalDMG {
-  color: grey;
-  font-weight: 700;
+  color: rgba(0, 0, 50, 0.829);
+  font-weight: 900;
+}
+
+.hidden {
+  display: none;
 }
 
 

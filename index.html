@@ -2,56 +2,59 @@
 <html lang="en">
 	<head>
     	<meta charset="utf-8">
-    	<meta name="description" content="This is where your description goes">
-    	<meta name="keywords" content="one, two, three">
+    	<meta name="description" content="Pokemon Type Relationships Of Attacks Between Two Pokemon App">
+    	<meta name="keywords" content="Pokemon">
 
-		<title>Title in the tab</title>
+		<title>Pokemon app</title>
 
-		<!-- external CSS link -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700;900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
 
 		<header>
-			<h1>Which Pokemon?</h1>
-			<input id='poke1' type="text" name="" value="">
-			<input id='poke2' type="text" name="">
-			<button id="button" type="button" name="button">Check Types</button>
+			<label for="poke1"><h1>Get Type Relationships Of Attacks Between Two Pokemon:</h1></label>
+			<input id='poke1' type="text" name="" value="" placeholder="First Pokemon">
+			<input id='poke2' type="text" name="" placeholder="Second Pokemon">
+			<button id="button" type="button" name="button">Check</button>
 		</header>
 		
-		<main class="flexContainer">
+		<main class="flexContainer hidden">
 
-			<section  id="pokeSection1" class="pokeSection">
-				<section>
-					<ul id="pokeUL1" class="typesUL"></ul>
+			<section class="container">
+				<section  id="pokeSection1" class="pokeSection">
+					<section class="ulSection">
+						<p>Pokemons` type(s):</p>
+						<ul id="pokeUL1" class="typesUL"></ul>
+					</section>
+	
+					<section id="desc1">
+						
+					</section>
+	
+					<img id='pokeImg1' src="" alt="">
+	
 				</section>
-
-				<section id="desc1">
+				
+				<section id="pokeSection2" class="pokeSection">
+					<section class="ulSection">
+						<p>Pokemons` type(s):</p>
+						<ul id="pokeUL2" class="typesUL"></ul>
+					</section>
+	
+					<section id="desc2">
 					
+					</section>
+					
+					<img id='pokeImg2' src="" alt="">
+	
 				</section>
-
-				<img id='pokeImg1' src="" alt="">
-
-			</section>
-			
-			<section id="pokeSection2" class="pokeSection">
-				<section>
-					<ul id="pokeUL2" class="typesUL"></ul>
-				</section>
-
-				<section id="desc2">
-				
-				</section>
-				
-				<img id='pokeImg2' src="" alt="">
-
 			</section>
 
 		</main>
-		
-		
-		
 
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

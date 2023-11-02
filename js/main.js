@@ -20,6 +20,10 @@ class ComparePokemonTypes {
 
   fetchPoke1Data() {
 
+    this.clearData();
+
+    this.moveHeader();
+
     const choice = document.querySelector("#poke1").value.toLowerCase();
     const url = `https://pokeapi.co/api/v2/pokemon/${choice}`;
     fetch(url)
@@ -28,6 +32,8 @@ class ComparePokemonTypes {
         console.log("Poke 1 data: ", data)
 
         this.poke1Types = data.types;
+
+        this.removeHidden();
       
         this.createLIElements(this.poke1Types, "pokeUL1");
 
@@ -36,10 +42,12 @@ class ComparePokemonTypes {
 
         await this.fetchPoke2Data();
 
-        this.showDmgRelations(this.poke1Types, this.poke2Types, "desc1"); // => I need type1, type2, x2 and x1/2 dmg
+        this.showDmgRelations(this.poke1Types, this.poke2Types, "desc1"); 
 
       })
       .catch(error => {
+        this.removeHidden();
+        this.createAlerMsg("desc1", document.querySelector("#poke1").value)
         console.log("Error: ", error)
       })
   };
@@ -63,9 +71,43 @@ class ComparePokemonTypes {
 
       })
       .catch(error => {
+        this.createAlerMsg("desc2", document.querySelector("#poke2").value)
         console.log("Error: ", error)
       })
   };
+
+  moveHeader() {
+    document.querySelector("header").style.marginTop = "3%"
+  }
+
+  removeHidden() {
+    document.querySelector("main").classList.remove("hidden");
+  }
+
+
+  clearData() {
+    const parentElement1 = document.querySelector("#pokeUL1");
+    while(parentElement1.firstChild) {
+      parentElement1.removeChild(parentElement1.firstChild)
+    }
+
+    const parentElement2 = document.querySelector("#pokeUL2");
+    while(parentElement2.firstChild) {
+      parentElement2.removeChild(parentElement2.firstChild)
+    }
+
+    document.querySelector("#pokeImg1").src = "";
+    document.querySelector("#pokeImg1").alt = "";
+    document.querySelector("#pokeImg2").src = "";
+    document.querySelector("#pokeImg2").alt = "";
+
+    document.querySelector(`#desc1`).innerText = "";
+    document.querySelector(`#desc2`).innerText = "";    
+  }
+
+  createAlerMsg(id, input) {
+    document.querySelector(`#${id}`).innerText = `Sorry, couldn't find the Pokemon named "${input}".`
+  }
 
   createLIElements(array, id) {
     const parentULElement = document.querySelector(`#${id}`)
@@ -85,6 +127,7 @@ class ComparePokemonTypes {
 
   showPokeImage(imageUrl, imgId) {
     document.querySelector(`#${imgId}`).src = imageUrl;
+    document.querySelector(`#${imgId}`).alt = "Picture of the chosen pokemon.";
   };
 
   showDmgRelations(attackingTypes, defendingTypes, descriptionId) {
