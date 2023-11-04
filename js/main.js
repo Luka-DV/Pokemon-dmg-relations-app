@@ -1,5 +1,7 @@
 //Example fetch using pokemonapi.co
 
+"use strict";
+
 document.querySelector("#button").addEventListener("click", () => {
   newComparison.fetchPoke1Data();
 });
