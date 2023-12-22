@@ -1,4 +1,4 @@
-### Simple Pokemon App
+### Pokemon App
 
 Simple Pokemon app using [Pokeapi](https://pokeapi.co/).
 
